@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * Implements hook_block_info().
+ */
+function hsu_contact_information_block_info() {
+$blocks['hsu_contact_information'] = array(
+      'info' => t('Department Contact Information'),
+    );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_configure().
+ *
+ *
+ */
+function hsu_contact_information_block_configure($delta = '') {
+  $form = array();
+  if ($delta == 'hsu_contact_information') {
+$form['hsu_contact_information'] = array(
+  '#type' => 'fieldset',
+  '#title' => t('Contact Information Options'),
+);
+    $form['hsu_contact_information']['hsu_contact_information_block_name'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Department Name'),
+      '#default_value' => variable_get('hsu_contact_information_block_name'),
+    );
+    $form['hsu_contact_information']['hsu_contact_information_block_address'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Address'),
+      '#default_value' => variable_get('hsu_contact_information_block_address', '1 Harpst St, Arcata, Ca. 95521'),
+    );
+    $form['hsu_contact_information']['hsu_contact_information_block_phone'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Phone'),
+      '#default_value' => variable_get('hsu_contact_information_block_phone', '707.826.xxxx'),
+    );
+    $form['hsu_contact_information']['hsu_contact_information_block_email'] = array(
+      '#type' => 'textfield',
+      '#title' => t('Email'),
+      '#default_value' => variable_get('hsu_contact_information_block_email', 'xxx@humboldt.edu'),
+    );
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_block_save().
+ *
+ *
+ */
+function hsu_contact_information_block_save($delta = '', $edit = array()) {
+  if ($delta == 'hsu_contact_information') {
+    variable_set('hsu_contact_information_block_address', $edit['hsu_contact_information_block_address']);
+    variable_set('hsu_contact_information_block_name', $edit['hsu_contact_information_block_name']);
+    variable_set('hsu_contact_information_block_phone', $edit['hsu_contact_information_block_phone']);
+    variable_set('hsu_contact_information_block_email', $edit['hsu_contact_information_block_email']);
+  }
+}
+
+/** 
+ * Implements hook_block_view().
+ *
+ * Prepares the contents of the block.
+ */
+function hsu_contact_information_block_view($delta = '') {
+ $block = array();
+  switch($delta) {
+    case 'hsu_contact_information' :
+      $block['subject'] = t('Contact Info');
+	//Assign Configuration to Variables
+      $name = variable_get('hsu_contact_information_block_name');
+      $phone = variable_get('hsu_contact_information_block_phone', '707.xxx.xxxx');
+      $email = variable_get('hsu_contact_information_block_email', 'xxx@humboldt.edu');
+      $address = variable_get('hsu_contact_information_block_address', '1 Harpst St, Arcata, Ca. 95521');
+	$html='';
+	$html.="$name <br/><a href=\"mailto:$email\">$email</a><br/>$phone<br/>$address";
+    $block['content'] = $html;
+}
+    return $block;
+}
+
+?>
