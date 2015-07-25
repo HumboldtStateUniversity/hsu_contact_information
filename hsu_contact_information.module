@@ -71,10 +71,10 @@ function hsu_contact_information_block_view($delta = '') {
     case 'hsu_contact_information' :
       $block['subject'] = t('Contact Info');
 	//Assign Configuration to Variables
-      $name = variable_get('hsu_contact_information_block_name');
-      $phone = variable_get('hsu_contact_information_block_phone', '707.xxx.xxxx');
-      $email = variable_get('hsu_contact_information_block_email', 'xxx@humboldt.edu');
-      $address = variable_get('hsu_contact_information_block_address', '1 Harpst St, Arcata, Ca. 95521');
+      $name = check_plain(variable_get('hsu_contact_information_block_name'));
+      $phone = check_plain(variable_get('hsu_contact_information_block_phone', '707.xxx.xxxx'));
+      $email = check_plain(variable_get('hsu_contact_information_block_email', 'xxx@humboldt.edu'));
+      $address = check_plain(variable_get('hsu_contact_information_block_address', '1 Harpst St, Arcata, Ca. 95521'));
 	$html='';
 	$html.="$name <br/><a href=\"mailto:$email\">$email</a><br/>$phone<br/>$address";
     $block['content'] = $html;
