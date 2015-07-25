@@ -1,4 +1,5 @@
 name = HSU Contact Information
 description = Block for Department Contact Information
+package = hsu
 core = 7.x
 files[] = hsu_contact_information.module
